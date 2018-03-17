@@ -11,41 +11,39 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
      <script type="text/babel">
 
-       class Greeting extends React.Component {
-         render() {
-           return (
-             <div>
-               <h1>Hello World!</h1>
-             </div>
-           );
-         }
-       }
-
-       class CityGreeting extends React.Component {
-         render() {
-           return (
-             <div>
-               <h3>Hello {this.props.city} ...</h3>
-             </div>
-           );
-         }
-       }
-
-       function App() {
-         const cities = ['Los Angeles', 'Tokyo', 'Paris'];
-         return (
-          <div>
-            <CityGreeting city={cities[0]} />
-            <CityGreeting city={cities[1]} />
-            <CityGreeting city={cities[2]} />
-            <Greeting />
-          </div>
-        );
+     class Greeting extends React.Component {
+         constructor(props){
+            super(props);
+            this.state = {
+              city: props.city,
+              hello: props.hello
+          }
       }
 
+      speak (event) {
+        if (event.target==document.getElementById('LA'))
+            this.setState({city:'Los Angeles', hello:'Hello, '})
+        else if (event.target==document.getElementById("Shanghai"))
+            this.setState({city:'Shanghai', hello: '\u4F60\u597D, '})
+        else if (event.target==document.getElementById("Paris"))
+            this.setState({city:'Paris', hello: 'Bonjour, '})
+      }
+
+      render() {
+        return (
+          <div>
+            <button id='LA' onClick={this.speak.bind(this)}>Los Angeles</button>
+            <button id='Shanghai' onClick={this.speak.bind(this)}>Shanghai</button>
+            <button id='Paris' onClick={this.speak.bind(this)}>Paris</button>
+            <h1>{this.state.hello} {this.state.city}!</h1>
+          </div>
+            );
+          }
+      }
+
+
        ReactDOM.render(
-         /*<Greeting />, document.getElementById('app')*/
-         <App />, document.getElementById('app')
+           <Greeting hello='Hello' city='world'/>, document.getElementById('app')
        );
 
      </script>
